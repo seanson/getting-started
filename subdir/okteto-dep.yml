@@ -1,0 +1,6 @@
+deploy:
+  commands:
+    - find .
+    - "echo KUBECONFIG: $KUBECONFIG"
+    - "echo KUBE_CONFIG_PATH: $KUBE_CONFIG_PATH"
+    - kubectl get pods

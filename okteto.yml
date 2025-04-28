@@ -1,19 +1,8 @@
-build:
-  api:
-    context: api
-  frontend:
-    context: frontend
-
-dependencies:
-  mongodb:
-    repository: https://github.com/okteto/mongodb
-    wait: true
-    variables:
-      MONGODB_PASSWORD: password    
-
+name: getting-started
 deploy:
-  - name: Helm Install
-    command: |
-      helm upgrade --install movies chart \
-        --set api.image=${OKTETO_BUILD_API_IMAGE} \
-        --set frontend.image=${OKTETO_BUILD_FRONTEND_IMAGE}
+  remote: true
+  image: okteto/pipeline-runner:1.31.0
+  context: .
+  commands:
+    - find .
+    - okteto deploy --file subdir/okteto-dep.yml --name getting-started-2 --wait --dependencies
