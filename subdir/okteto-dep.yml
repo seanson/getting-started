@@ -1,0 +1,10 @@
+dependencies:
+  mongodb:
+    repository: https://github.com/okteto/mongodb
+    wait: true
+    variables:
+      MONGODB_PASSWORD: password    
+
+deploy:
+  - name: Show files
+    command: find /okteto

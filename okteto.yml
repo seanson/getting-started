@@ -1,19 +1,15 @@
-build:
-  api:
-    context: api
-  frontend:
-    context: frontend
-
-dependencies:
-  mongodb:
-    repository: https://github.com/okteto/mongodb
-    wait: true
-    variables:
-      MONGODB_PASSWORD: password    
-
+name: getting-started
+# dependencies:
+#   infrastructure:
+#     repository: https://github.com/burstsms/infrastructure-okteto-shared
+#     branch: KJU-1522_use_shared_infra
+#     variables:
+#       CONFIG: fullstack
+#     wait: true
+#     timeout: 15m
 deploy:
-  - name: Helm Install
-    command: |
-      helm upgrade --install movies chart \
-        --set api.image=${OKTETO_BUILD_API_IMAGE} \
-        --set frontend.image=${OKTETO_BUILD_FRONTEND_IMAGE}
+  # Use our custom runner so we have access to extra utilities like pt migration
+  image: "ghcr.io/burstsms/pipeline-runner:main"
+  commands:
+    - find /okteto
+    - okteto deploy --file subdir/okteto-dep.yml --name getting-started-2 --wait --dependencies
