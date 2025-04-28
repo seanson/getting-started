@@ -1,0 +1,21 @@
+build:
+  api:
+    context: api
+  frontend:
+    context: frontend
+
+dependencies:
+  mongodb:
+    repository: https://github.com/okteto/mongodb
+    wait: true
+    variables:
+      MONGODB_PASSWORD: password    
+
+deploy:
+  - name: Show files
+    command: find /okteto
+  - name: Helm Install
+    command: |
+      helm upgrade --install movies chart \
+        --set api.image=${OKTETO_BUILD_API_IMAGE} \
+        --set frontend.image=${OKTETO_BUILD_FRONTEND_IMAGE}
